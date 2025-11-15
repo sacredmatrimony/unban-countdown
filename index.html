@@ -3,49 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <title>Countdown</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
     body {
+        margin: 0;
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        background: #f8f8f8;
-        font-family: Arial, sans-serif;
+        font-family: "Inter", Arial, sans-serif;
+        background: linear-gradient(135deg, #4b79ff, #6ad7ff);
+        color: white;
+    }
+
+    .card {
+        backdrop-filter: blur(14px);
+        background: rgba(255, 255, 255, 0.12);
+        padding: 40px 60px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin: 0 0 20px;
+    }
+
+    .timer {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .unit {
         text-align: center;
     }
-    #countdown {
-        font-size: 3rem;
-        font-weight: bold;
+
+    .number {
+        font-size: 3.2rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .label {
+        font-size: 0.9rem;
+        opacity: 0.85;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    @media (max-width: 500px) {
+        .number { font-size: 2.4rem; }
+        .card { padding: 30px 30px; }
     }
 </style>
 </head>
 <body>
 
-<div id="countdown">Loading…</div>
+<div class="card">
+    <h1>Countdown</h1>
+    <div class="timer">
+        <div class="unit"><div class="number" id="days">0</div><div class="label">Days</div></div>
+        <div class="unit"><div class="number" id="hours">0</div><div class="label">Hours</div></div>
+        <div class="unit"><div class="number" id="minutes">0</div><div class="label">Minutes</div></div>
+        <div class="unit"><div class="number" id="seconds">0</div><div class="label">Seconds</div></div>
+    </div>
+</div>
 
 <script>
-// Target date and time
-const targetDate = new Date("November 15, 2025 14:29:00").getTime();
+const target = new Date("November 15, 2025 14:29:00").getTime();
 
-function updateCountdown() {
-    const now = new Date().getTime();
-    const diff = targetDate - now;
+function update() {
+    const now = Date.now();
+    const diff = target - now;
 
-    if (diff < 0) {
-        document.getElementById("countdown").innerHTML = "It's time!";
+    if (diff <= 0) {
+        document.querySelector(".card").innerHTML = "<h1>It's Time!</h1>";
         return;
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    document.getElementById("countdown").innerHTML =
-        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    document.getElementById("days").textContent = Math.floor(diff / 86400000);
+    document.getElementById("hours").textContent = Math.floor((diff % 86400000) / 3600000);
+    document.getElementById("minutes").textContent = Math.floor((diff % 3600000) / 60000);
+    document.getElementById("seconds").textContent = Math.floor((diff % 60000) / 1000);
 }
 
-setInterval(updateCountdown, 1000);
+setInterval(update, 1000);
+update();
 </script>
 
 </body>
