@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Countdown</title>
+<title>Unban Countdown</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
     body {
@@ -12,18 +12,20 @@
         justify-content: center;
         align-items: center;
         font-family: "Inter", Arial, sans-serif;
-        background: linear-gradient(135deg, #4b79ff, #6ad7ff);
-        color: white;
+        background: linear-gradient(135deg, #0a0c10, #13171f);
+        color: #e5e7eb;
     }
 
     .card {
         backdrop-filter: blur(14px);
-        background: rgba(255, 255, 255, 0.12);
+        background: rgba(22, 26, 34, 0.75);
         padding: 40px 60px;
-        border-radius: 20px;
+        border-radius: 24px;
         text-align: center;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
         animation: fadeIn 1s ease forwards;
+        max-width: 420px;
+        width: 90%;
     }
 
     @keyframes fadeIn {
@@ -34,46 +36,76 @@
     h1 {
         font-size: 2rem;
         margin: 0 0 20px;
+        color: #fff;
+    }
+
+    .avatar {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 4px 14px rgba(0,0,0,0.4);
     }
 
     .timer {
         display: flex;
-        gap: 20px;
         justify-content: center;
+        gap: 16px;
+        margin-bottom: 20px;
     }
 
-    .unit {
-        text-align: center;
-    }
+    .unit { text-align: center; }
 
     .number {
-        font-size: 3.2rem;
+        font-size: 2.8rem;
         font-weight: 700;
+        color: #f8f9fb;
         line-height: 1;
     }
 
     .label {
-        font-size: 0.9rem;
-        opacity: 0.85;
+        font-size: 0.8rem;
+        opacity: 0.75;
         text-transform: uppercase;
         letter-spacing: 1px;
+        color: #9da3ae;
     }
 
+    .profile-info {
+        margin-top: 14px;
+        font-size: 0.95rem;
+        line-height: 1.4;
+        color: #c7cbd3;
+    }
+
+    b { color: #fff; }
+
     @media (max-width: 500px) {
-        .number { font-size: 2.4rem; }
-        .card { padding: 30px 30px; }
+        .number { font-size: 2.2rem; }
+        .card { padding: 30px; }
     }
 </style>
 </head>
 <body>
 
 <div class="card">
-    <h1>Countdown</h1>
+    <img class="avatar" src="https://www.roblox.com/headshot-thumbnail/image?userId=1341403467&width=420&height=420&format=png" alt="Avatar">
+
+    <h1>Unban Countdown</h1>
+
     <div class="timer">
         <div class="unit"><div class="number" id="days">0</div><div class="label">Days</div></div>
         <div class="unit"><div class="number" id="hours">0</div><div class="label">Hours</div></div>
         <div class="unit"><div class="number" id="minutes">0</div><div class="label">Minutes</div></div>
         <div class="unit"><div class="number" id="seconds">0</div><div class="label">Seconds</div></div>
+    </div>
+
+    <div class="profile-info">
+        <p><b>Roblox User:</b> sacredmatrimony</p>
+        <p><b>User ID:</b> 1341403467</p>
+        <p>This countdown marks the return / unban of this account.</p>
     </div>
 </div>
 
@@ -85,14 +117,19 @@ function update() {
     const diff = target - now;
 
     if (diff <= 0) {
-        document.querySelector(".card").innerHTML = "<h1>It's Time!</h1>";
+        document.querySelector(".card").innerHTML =
+          "<h1>Account Unbanned 🎉</h1>";
         return;
     }
 
-    document.getElementById("days").textContent = Math.floor(diff / 86400000);
-    document.getElementById("hours").textContent = Math.floor((diff % 86400000) / 3600000);
-    document.getElementById("minutes").textContent = Math.floor((diff % 3600000) / 60000);
-    document.getElementById("seconds").textContent = Math.floor((diff % 60000) / 1000);
+    document.getElementById("days").textContent =
+        Math.floor(diff / 86400000);
+    document.getElementById("hours").textContent =
+        Math.floor((diff % 86400000) / 3600000);
+    document.getElementById("minutes").textContent =
+        Math.floor((diff % 3600000) / 60000);
+    document.getElementById("seconds").textContent =
+        Math.floor((diff % 60000) / 1000);
 }
 
 setInterval(update, 1000);
