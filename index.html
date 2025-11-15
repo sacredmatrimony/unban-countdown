@@ -91,7 +91,10 @@
 <body>
 
 <div class="card">
-    <img class="avatar" src="https://www.roblox.com/headshot-thumbnail/image?userId=1341403467&width=420&height=420&format=png" alt="Avatar">
+
+    <img class="avatar" 
+         src="https://www.roblox.com/headshot-thumbnail/image?userId=1341403467&width=420&height=420&format=png" 
+         alt="Avatar">
 
     <h1>Unban Countdown</h1>
 
@@ -105,12 +108,16 @@
     <div class="profile-info">
         <p><b>Roblox User:</b> sacredmatrimony</p>
         <p><b>User ID:</b> 1341403467</p>
-        <p>This countdown marks the return / unban of this account.</p>
+        <p>This countdown marks when this account becomes unbanned.</p>
     </div>
 </div>
 
 <script>
-const target = new Date("November 15, 2025 14:29:00").getTime();
+// 5 hours and 26 minutes in milliseconds
+const offset = (5 * 60 + 26) * 60 * 1000;
+
+// Set target time when the page loads
+const target = Date.now() + offset;
 
 function update() {
     const now = Date.now();
@@ -118,18 +125,20 @@ function update() {
 
     if (diff <= 0) {
         document.querySelector(".card").innerHTML =
-          "<h1>Account Unbanned 🎉</h1>";
+            "<h1>Account Unbanned 🎉</h1>";
         return;
     }
 
-    document.getElementById("days").textContent =
-        Math.floor(diff / 86400000);
-    document.getElementById("hours").textContent =
-        Math.floor((diff % 86400000) / 3600000);
-    document.getElementById("minutes").textContent =
-        Math.floor((diff % 3600000) / 60000);
-    document.getElementById("seconds").textContent =
-        Math.floor((diff % 60000) / 1000);
+    // Time math
+    const days    = Math.floor(diff / 86400000);
+    const hours   = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
 }
 
 setInterval(update, 1000);
